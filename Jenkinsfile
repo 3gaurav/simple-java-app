@@ -1,25 +1,25 @@
 pipeline{
-    tools {
-        maven  'mvn'
-    }
     agent any
+    tools {
+        maven "gk"
+    }
     stages{
-        stage('cloning the code'){
+        stage("cloning the code"){
             steps{
-                echo "cloning the code "
-                git branch: 'test', url: 'https://github.com/mantu0tech/simple-java-app.git'
-            }
+            git branch: 'main', url: 'https://github.com/3gaurav/simple-java-app.git'
         }
-        stage('test the code'){
+    }
+    stage("build application"){
             steps{
-                echo "testing the code  "
-                sh 'mvn clean install'
-            }
+                echo "building the code"
+            sh "mvn clean install"
         }
-        stage('archive jar') {
-            steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+    }
+    stage("artifacts"){
+            steps{
+                echo "packaging the code"
+           archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+        }
     }
 }
-    }
 }
